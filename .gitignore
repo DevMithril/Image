@@ -1,0 +1,4 @@
+build
+*.o
+*.d
+demo/demo_text
