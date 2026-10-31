@@ -3,11 +3,6 @@
 SDL_Texture *surface_to_texture(SDL_Surface *surface, SDL_Renderer *renderer) {
     SDL_Texture *texture = NULL, *tmp = NULL;
 
-    if (!surface) {
-        SDL_Log("surface_to_texture() : surface parameter is NULL\n");
-        return NULL;
-    }
-
     tmp = SDL_CreateTextureFromSurface(renderer, surface);
     if(!tmp) {
         SDL_Log("SDL_CreateTextureFromSurface() : %s\n", SDL_GetError());
