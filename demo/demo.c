@@ -7,6 +7,10 @@
 #define RES_X 320
 #define RES_Y 240
 
+#define BLACK ((SDL_Color){0, 0, 0, 255})
+#define ORANGE ((SDL_Color){200, 100, 0, 255})
+#define CYAN ((SDL_Color){0, 100, 200, 255})
+
 // INPUT
 
 typedef struct Input {
@@ -31,11 +35,9 @@ void update_input(Input *input) {
             break;
         }
     }
-    input->down = input->key[input->key_down];
-    input->left = input->key[input->key_left];
-    input->right = input->key[input->key_right];
-    input->up = input->key[input->key_up];
-    input->space = input->key[input->key_space];
+    for (int i = 0; i < 5; i++) {
+        (&input->up)[i] = input->key[(&input->key_up)[i]];
+    }
 }
 
 void load_input(Input *input) {
@@ -50,17 +52,33 @@ void load_input(Input *input) {
 
 typedef struct App {
     Input input;
+    SDL_FRect dst_normal, dst_x_gradient, dst_y_gradient;
+    SDL_Texture *normal, *x_gradient, *y_gradient;
+    TTF_Font *font;
     SDL_Renderer *renderer;
     SDL_Window *window;
 } App;
 
 void quit_app(App *app, int status) {
+    if (app->font) {
+        TTF_CloseFont(app->font);
+    }
+    if (app->normal) {
+        SDL_DestroyTexture(app->normal);
+    }
+    if (app->x_gradient) {
+        SDL_DestroyTexture(app->x_gradient);
+    }
+    if (app->y_gradient) {
+        SDL_DestroyTexture(app->y_gradient);
+    }
     if (app->renderer) {
         SDL_DestroyRenderer(app->renderer);
     }
     if (app->window) {
         SDL_DestroyWindow(app->window);
     }
+    TTF_Quit();
     SDL_Quit();
     exit(status);
 }
@@ -70,11 +88,11 @@ void init_app(App *app, const char window_name[], int res_x, int res_y, bool ful
         printf("SDL_Init() : %s\n", SDL_GetError());
         quit_app(app, EXIT_FAILURE);
     }
-    if (fullscreen) {
-        app->window = SDL_CreateWindow(window_name, res_x, res_y, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_HIGH_PIXEL_DENSITY);
-    } else {
-        app->window = SDL_CreateWindow(window_name, res_x, res_y, SDL_WINDOW_HIGH_PIXEL_DENSITY);
+    if (!TTF_Init()) {
+        printf("TTF_Init() : %s\n", SDL_GetError());
+        quit_app(app, EXIT_FAILURE);
     }
+    app->window = SDL_CreateWindow(window_name, res_x, res_y, ((fullscreen) ? SDL_WINDOW_FULLSCREEN : 0) | SDL_WINDOW_HIGH_PIXEL_DENSITY);
     if (!app->window) {
         printf("SDL_CreateWindow() : %s\n", SDL_GetError());
         quit_app(app, EXIT_FAILURE);
@@ -88,13 +106,37 @@ void init_app(App *app, const char window_name[], int res_x, int res_y, bool ful
 }
 
 void load_app_assets(App *app) {
+    SDL_Surface *tmp;
     load_input(&app->input);
+
+    app->font = TTF_OpenFont("upheavtt.ttf", 15);
+    if (!app->font) {
+        printf("TTF_OpenFont() : %s\n", SDL_GetError());
+        quit_app(app, EXIT_FAILURE);
+    }
+
+    tmp = create_text("Normal", app->font, ORANGE);
+    app->normal = surface_to_texture(tmp, app->renderer);
+    app->dst_normal = (SDL_FRect){10, 10, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("X Gradient", app->font, ORANGE);
+    make_gradient(tmp, ORANGE, CYAN, NULL, X_GRADIENT);
+    app->x_gradient = surface_to_texture(tmp, app->renderer);
+    app->dst_x_gradient = (SDL_FRect){10, 50, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Y Gradient", app->font, ORANGE);
+    make_gradient(tmp, ORANGE, CYAN, NULL, Y_GRADIENT);
+    app->y_gradient = surface_to_texture(tmp, app->renderer);
+    app->dst_y_gradient = (SDL_FRect){10, 90, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
 }
 
 // MAIN
 
 int main(void) {
-    App app = {.renderer = NULL, .window = NULL};
+    App app;
 
     init_app(&app, "Demo Text", RES_X, RES_Y, false);
     load_app_assets(&app);
@@ -102,6 +144,10 @@ int main(void) {
     while (!app.input.quit) {
         update_input(&app.input);
         SDL_RenderClear(app.renderer);
+
+        SDL_RenderTexture(app.renderer, app.normal, NULL, &app.dst_normal);
+        SDL_RenderTexture(app.renderer, app.x_gradient, NULL, &app.dst_x_gradient);
+        SDL_RenderTexture(app.renderer, app.y_gradient, NULL, &app.dst_y_gradient);
 
         SDL_RenderPresent(app.renderer);
         SDL_Delay((int)(1000 / 60));
