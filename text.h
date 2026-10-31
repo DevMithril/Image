@@ -34,6 +34,35 @@ subject to the following restrictions:
 ================================================================================
 */
 
+typedef enum Gradient_Axis {
+    X_GRADIENT,
+    Y_GRADIENT
+} Gradient_Axis;
+
+/**
+ * Crée une surface au format SDL_PIXELFORMAT_RGBA32 avec un texte dessus
+ * \param str le texte à render sur la surface (null-terminated string)
+ * \param font la police du texte
+ * \param color la couleur du texte
+ * \return La surface avec le texte dessus
+ */
+SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
+
+/**
+ * Crée un dégradé sur une surface en concervant la transparence
+ * \param surface la surface à modifier
+ * \param src la couleur de départ du dégradé (en haut ou à gauche)
+ * \param dst la couleur d'arrivée du dégradé (en bas ou à droite)
+ * \param clip rectangle où doit être fait le dégradé sur `surface`,
+ *             NULL pour toute la surface
+ * \param axis axe sur lequel sera fait le dégradé
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
+                   SDL_Rect *clip, Gradient_Axis axis);
+
 /**
  * Converti une surface en texture pouvant être utilisée comme 
  * destination de rendu
