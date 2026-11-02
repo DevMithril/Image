@@ -19,13 +19,12 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
     dst_shade.x += offset.x;
     dst_shade.y += offset.y;
 
-    shade = SDL_CreateSurface(src->w, src->h, src->format);
+    shade = SDL_DuplicateSurface(src);
     if (!shade) {
         SDL_Log("SDL_CreateSurface() : %s\n", SDL_GetError());
         SDL_DestroySurface(src);
         return NULL;
     }
-    SDL_BlitSurface(src, NULL, shade, NULL);
     make_solid(shade, color, NULL);
 
     new = SDL_CreateSurface(size.x, size.y, src->format);
