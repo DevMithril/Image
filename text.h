@@ -75,8 +75,8 @@ bool make_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
 /**
  * Crée un dégradé sur une surface en concervant la transparence
  * \param surface la surface à modifier
- * \param src la couleur de départ du dégradé (en haut ou à gauche)
- * \param dst la couleur d'arrivée du dégradé (en bas ou à droite)
+ * \param src la couleur RGBA de départ du dégradé (en haut ou à gauche)
+ * \param dst la couleur RGBA d'arrivée du dégradé (en bas ou à droite)
  * \param clip rectangle où doit être fait le dégradé sur `surface`,
  *             NULL pour toute la surface
  * \param axis axe sur lequel sera fait le dégradé
