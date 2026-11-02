@@ -129,31 +129,31 @@ void load_app_assets(App *app) {
     SDL_DestroySurface(tmp);
 
     tmp = create_text("X Gradient", app->font, ORANGE);
-    make_gradient(tmp, ORANGE, WHITE, NULL, X_GRADIENT);
+    img_gradient(tmp, ORANGE, WHITE, NULL, X_GRADIENT);
     app->texture[TEXT_X_GRADIENT] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_X_GRADIENT] = (SDL_FRect){10, 50, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Y Gradient", app->font, ORANGE);
-    make_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
+    img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
     app->texture[TEXT_Y_GRADIENT] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_Y_GRADIENT] = (SDL_FRect){10, 90, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Solid", app->font, ORANGE);
-    make_solid(tmp, WHITE, NULL);
+    img_solid(tmp, WHITE, NULL);
     app->texture[TEXT_SOLID] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_SOLID] = (SDL_FRect){10, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Shadow", app->font, ORANGE);
-    tmp = make_shadow(tmp, WHITE, (SDL_Point){1, -1});
+    tmp = img_shadow(tmp, WHITE, (SDL_Point){1, -1});
     app->texture[TEXT_SHADOW] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_SHADOW] = (SDL_FRect){10, 170, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Border", app->font, ORANGE);
-    make_border(tmp, WHITE, 1);
+    img_border(tmp, WHITE, 1);
     app->texture[TEXT_BORDER] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_BORDER] = (SDL_FRect){170, 10, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);

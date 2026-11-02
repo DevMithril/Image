@@ -33,7 +33,7 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : make_outline()
+// TODO : img_outline()
 // TODO : fonction pour limiter la palette de couleur
 typedef enum Gradient_Axis {
     X_GRADIENT,
@@ -58,7 +58,7 @@ SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
  * \note `src` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `src` est détruit par cette fonction
  */
-SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
+SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
 
 /**
  * Dessine des bordures sur les contours des éléments opaques d'une surface
@@ -70,7 +70,7 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
-bool make_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
 
 /**
  * Crée un dégradé sur une surface en concervant la transparence
@@ -84,7 +84,7 @@ bool make_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  */
-bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
+bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
                    SDL_Rect *clip, Gradient_Axis axis);
 
 /**
@@ -96,7 +96,7 @@ bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  */
-bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
+bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 

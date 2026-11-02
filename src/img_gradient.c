@@ -1,6 +1,6 @@
 #include "types.h"
 
-bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
+bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
                    SDL_Rect *clip, Gradient_Axis axis) {
     f32 t, inv_delta, color_a;
     u8 r, g, b, a, br, bg, bb, ba;

@@ -1,6 +1,6 @@
 #include "types.h"
 
-bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip) {
+bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip) {
     f32 color_a = color.a / 255.0f;
     u8 r, g, b, a;
     u32 *row;

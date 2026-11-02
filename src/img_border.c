@@ -32,7 +32,7 @@ bool is_border(SDL_Surface *surface, i32 x, i32 y, u32 depth, u8 a) {
     return false;
 }
 
-bool make_border(SDL_Surface *surface, SDL_Color color, u32 depth) {
+bool img_border(SDL_Surface *surface, SDL_Color color, u32 depth) {
     f32 color_a = color.a / 255.0f;
     u8 r, g, b, a;
     u32 *row;

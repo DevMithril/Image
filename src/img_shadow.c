@@ -2,9 +2,9 @@
 
 #define abs(x) (((x) < 0) ? -(x) : (x))
 
-bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
+bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
 
-SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
+SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
     SDL_Surface *new, *shade;
     SDL_Point origin, size;
     SDL_Rect dst_src, dst_shade;
@@ -25,7 +25,7 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
         SDL_DestroySurface(src);
         return NULL;
     }
-    make_solid(shade, color, NULL);
+    img_solid(shade, color, NULL);
 
     new = SDL_CreateSurface(size.x, size.y, src->format);
     if (!new) {
