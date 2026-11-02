@@ -21,7 +21,7 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
 
     shade = SDL_DuplicateSurface(src);
     if (!shade) {
-        SDL_Log("SDL_CreateSurface() : %s\n", SDL_GetError());
+        SDL_Log("SDL_DuplicateSurface() : %s\n", SDL_GetError());
         SDL_DestroySurface(src);
         return NULL;
     }
