@@ -14,6 +14,9 @@ DEP= $(SRC:$(SRC_DIR)%.c=$(DEP_DIR)%.d)
 
 lib: $(LIBSO)
 
+demo: lib demo/Makefile
+	@cd demo/ && make && cd ..
+
 $(LIBSO): $(OBJ)
 	$(CC) $(CFLAGS) $(SOFLAGS) -o $@ $^
 

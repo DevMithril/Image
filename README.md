@@ -18,5 +18,6 @@ Puis compilez avec les flags adéquats :
 
 #### Demo :
 
-    $ cd demo
-    $ make run
+Affiche diverses rendus de texte :
+
+    $ make demo
