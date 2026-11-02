@@ -33,7 +33,8 @@ bool is_border(SDL_Surface *surface, i32 x, i32 y, u32 depth, u8 a) {
 }
 
 bool make_border(SDL_Surface *surface, SDL_Color color, u32 depth) {
-    u8 r = color.r, g = color.g, b = color.b, a;
+    f32 color_a = color.a / 255.0f;
+    u8 r, g, b, a;
     u32 *row;
     const SDL_PixelFormatDetails *format;
 
@@ -48,8 +49,11 @@ bool make_border(SDL_Surface *surface, SDL_Color color, u32 depth) {
         row = (u32*)((u8*)surface->pixels + y * surface->pitch);
 
         for (i32 x = 0; x < surface->w; x++) {
-            SDL_GetRGBA(row[x], format, NULL, NULL, NULL, NULL, &a);
+            SDL_GetRGBA(row[x], format, NULL, &r, &g, &b, &a);
             if (is_border(surface, x, y, depth, a)) {
+                r = (1 - color_a) * r + color_a * color.r;
+                g = (1 - color_a) * g + color_a * color.g;
+                b = (1 - color_a) * b + color_a * color.b;
                 row[x] = SDL_MapSurfaceRGBA(surface, r, g, b, a);
             }
         }

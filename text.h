@@ -52,7 +52,7 @@ SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
 /**
  * Crée une nouvelle surface ajoutant une ombre à `src`
  * \param src la surface d'origine
- * \param color la couleur de l'ombre
+ * \param color la couleur RGBA de l'ombre
  * \param offset position de l'ombre par rapport à la surface d'origine
  * \return La nouvelle surface avec l'ombre, NULL en cas d'erreur
  * \note `src` est présumé être au format SDL_PIXELFORMAT_RGBA32
@@ -63,7 +63,7 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
 /**
  * Dessine des bordures sur les contours des éléments opaques d'une surface
  * \param surface la surface à modifier
- * \param color la couleur des bordures
+ * \param color la couleur RGBA des bordures
  * \param depth l'épaisseur des contours (en pixel)
  * \return `false` en cas d'échec, `true` sinon
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
@@ -90,14 +90,13 @@ bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
 /**
  * Recolorise une surface en concervant la transparence
  * \param surface la surface à modifier
- * \param color la couleur à appliquer
+ * \param color la couleur RGBA à appliquer
  * \param clip rectangle à modifier sur `surface`, NULL pour toute la surface
  * \return `false` en cas d'échec, `true` sinon
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  */
 bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
-// TODO : prendre en compte l'alpha de `color`
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 
