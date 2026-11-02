@@ -4,12 +4,24 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "../text.h"
 
-#define RES_X 320
-#define RES_Y 240
+#define RES_X 480
+#define RES_Y 270
+
+#define FONT_SIZE 25
 
 #define BLACK ((SDL_Color){0, 0, 0, 255})
-#define ORANGE ((SDL_Color){200, 100, 0, 255})
-#define CYAN ((SDL_Color){0, 100, 200, 255})
+#define WHITE ((SDL_Color){200, 200, 200, 255})
+#define ORANGE ((SDL_Color){200, 50, 0, 255})
+
+typedef enum {
+    TEXT_NORMAL,
+    TEXT_X_GRADIENT,
+    TEXT_Y_GRADIENT,
+    TEXT_SOLID,
+    TEXT_SHADOW,
+    TEXT_BORDER,
+    TEXT_COUNT
+} Text;
 
 // INPUT
 
@@ -52,8 +64,8 @@ void load_input(Input *input) {
 
 typedef struct App {
     Input input;
-    SDL_FRect dst_normal, dst_x_gradient, dst_y_gradient, dst_solid, dst_shadow;
-    SDL_Texture *normal, *x_gradient, *y_gradient, *solid, *shadow;
+    SDL_FRect dst[TEXT_COUNT];
+    SDL_Texture *texture[TEXT_COUNT];
     TTF_Font *font;
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -63,20 +75,10 @@ void quit_app(App *app, int status) {
     if (app->font) {
         TTF_CloseFont(app->font);
     }
-    if (app->normal) {
-        SDL_DestroyTexture(app->normal);
-    }
-    if (app->x_gradient) {
-        SDL_DestroyTexture(app->x_gradient);
-    }
-    if (app->y_gradient) {
-        SDL_DestroyTexture(app->y_gradient);
-    }
-    if (app->solid) {
-        SDL_DestroyTexture(app->solid);
-    }
-    if (app->shadow) {
-        SDL_DestroyTexture(app->shadow);
+    for (int i = 0; i < TEXT_COUNT; i++) {
+        if (app->texture[i]) {
+            SDL_DestroyTexture(app->texture[i]);
+        }
     }
     if (app->renderer) {
         SDL_DestroyRenderer(app->renderer);
@@ -108,46 +110,52 @@ void init_app(App *app, const char window_name[], int res_x, int res_y, bool ful
         printf("SDL_CreateRenderer() : %s\n", SDL_GetError());
         quit_app(app, EXIT_FAILURE);
     }
-    SDL_SetRenderLogicalPresentation(app->renderer, res_x, res_y, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    SDL_SetRenderLogicalPresentation(app->renderer, res_x, res_y, SDL_LOGICAL_PRESENTATION_INTEGER_SCALE);
 }
 
 void load_app_assets(App *app) {
     SDL_Surface *tmp;
     load_input(&app->input);
 
-    app->font = TTF_OpenFont("upheavtt.ttf", 15);
+    app->font = TTF_OpenFont("upheavtt.ttf", FONT_SIZE);
     if (!app->font) {
         printf("TTF_OpenFont() : %s\n", SDL_GetError());
         quit_app(app, EXIT_FAILURE);
     }
 
     tmp = create_text("Normal", app->font, ORANGE);
-    app->normal = surface_to_texture(tmp, app->renderer);
-    app->dst_normal = (SDL_FRect){10, 10, tmp->w, tmp->h};
+    app->texture[TEXT_NORMAL] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_NORMAL] = (SDL_FRect){10, 10, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("X Gradient", app->font, ORANGE);
-    make_gradient(tmp, ORANGE, CYAN, NULL, X_GRADIENT);
-    app->x_gradient = surface_to_texture(tmp, app->renderer);
-    app->dst_x_gradient = (SDL_FRect){10, 50, tmp->w, tmp->h};
+    make_gradient(tmp, ORANGE, WHITE, NULL, X_GRADIENT);
+    app->texture[TEXT_X_GRADIENT] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_X_GRADIENT] = (SDL_FRect){10, 50, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Y Gradient", app->font, ORANGE);
-    make_gradient(tmp, ORANGE, CYAN, NULL, Y_GRADIENT);
-    app->y_gradient = surface_to_texture(tmp, app->renderer);
-    app->dst_y_gradient = (SDL_FRect){10, 90, tmp->w, tmp->h};
+    make_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
+    app->texture[TEXT_Y_GRADIENT] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_Y_GRADIENT] = (SDL_FRect){10, 90, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Solid", app->font, ORANGE);
-    make_solid(tmp, CYAN, NULL);
-    app->solid = surface_to_texture(tmp, app->renderer);
-    app->dst_solid = (SDL_FRect){10, 130, tmp->w, tmp->h};
+    make_solid(tmp, WHITE, NULL);
+    app->texture[TEXT_SOLID] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_SOLID] = (SDL_FRect){10, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Shadow", app->font, ORANGE);
-    tmp = make_shadow(tmp, CYAN, (SDL_Point){1, -1});
-    app->shadow = surface_to_texture(tmp, app->renderer);
-    app->dst_shadow = (SDL_FRect){10, 170, tmp->w, tmp->h};
+    tmp = make_shadow(tmp, WHITE, (SDL_Point){1, -1});
+    app->texture[TEXT_SHADOW] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_SHADOW] = (SDL_FRect){10, 170, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Border", app->font, ORANGE);
+    make_border(tmp, WHITE, 1);
+    app->texture[TEXT_BORDER] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_BORDER] = (SDL_FRect){170, 10, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 }
 
@@ -163,11 +171,9 @@ int main(void) {
         update_input(&app.input);
         SDL_RenderClear(app.renderer);
 
-        SDL_RenderTexture(app.renderer, app.normal, NULL, &app.dst_normal);
-        SDL_RenderTexture(app.renderer, app.x_gradient, NULL, &app.dst_x_gradient);
-        SDL_RenderTexture(app.renderer, app.y_gradient, NULL, &app.dst_y_gradient);
-        SDL_RenderTexture(app.renderer, app.solid, NULL, &app.dst_solid);
-        SDL_RenderTexture(app.renderer, app.shadow, NULL, &app.dst_shadow);
+        for (int i = 0; i < TEXT_COUNT; i++) {
+            SDL_RenderTexture(app.renderer, app.texture[i], NULL, &app.dst[i]);
+        }
 
         SDL_RenderPresent(app.renderer);
         SDL_Delay((int)(1000 / 60));

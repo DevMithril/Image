@@ -33,9 +33,8 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : make_border(surface, color, depth)
 // TODO : make_outline()
-// TODO : limiter la palette de couleur
+// TODO : fonction pour limiter la palette de couleur
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT
@@ -62,6 +61,17 @@ SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
 SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
 
 /**
+ * Dessine des bordures sur les contours des éléments opaques d'une surface
+ * \param surface la surface à modifier
+ * \param color la couleur des bordures
+ * \param depth l'épaisseur des contours (en pixel)
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` n'est pas détruit par cette fonction
+ * \note les bordures conservent la transparence initiale
+ */
+bool make_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+
+/**
  * Crée un dégradé sur une surface en concervant la transparence
  * \param surface la surface à modifier
  * \param src la couleur de départ du dégradé (en haut ou à gauche)
@@ -86,6 +96,7 @@ bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
  * \note `surface` n'est pas détruit par cette fonction
  */
 bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
+// TODO : prendre en compte l'alpha de `color`
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 
