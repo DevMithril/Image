@@ -52,8 +52,8 @@ void load_input(Input *input) {
 
 typedef struct App {
     Input input;
-    SDL_FRect dst_normal, dst_x_gradient, dst_y_gradient;
-    SDL_Texture *normal, *x_gradient, *y_gradient;
+    SDL_FRect dst_normal, dst_x_gradient, dst_y_gradient, dst_solid, dst_shadow;
+    SDL_Texture *normal, *x_gradient, *y_gradient, *solid, *shadow;
     TTF_Font *font;
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -71,6 +71,12 @@ void quit_app(App *app, int status) {
     }
     if (app->y_gradient) {
         SDL_DestroyTexture(app->y_gradient);
+    }
+    if (app->solid) {
+        SDL_DestroyTexture(app->solid);
+    }
+    if (app->shadow) {
+        SDL_DestroyTexture(app->shadow);
     }
     if (app->renderer) {
         SDL_DestroyRenderer(app->renderer);
@@ -131,6 +137,18 @@ void load_app_assets(App *app) {
     app->y_gradient = surface_to_texture(tmp, app->renderer);
     app->dst_y_gradient = (SDL_FRect){10, 90, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
+
+    tmp = create_text("Solid", app->font, ORANGE);
+    make_solid(tmp, CYAN, NULL);
+    app->solid = surface_to_texture(tmp, app->renderer);
+    app->dst_solid = (SDL_FRect){10, 130, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Shadow", app->font, ORANGE);
+    tmp = make_shadow(tmp, CYAN, (SDL_Point){1, -1});
+    app->shadow = surface_to_texture(tmp, app->renderer);
+    app->dst_shadow = (SDL_FRect){10, 170, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
 }
 
 // MAIN
@@ -138,7 +156,7 @@ void load_app_assets(App *app) {
 int main(void) {
     App app;
 
-    init_app(&app, "Demo Text", RES_X, RES_Y, false);
+    init_app(&app, "Demo Text", RES_X, RES_Y, true);
     load_app_assets(&app);
 
     while (!app.input.quit) {
@@ -148,6 +166,8 @@ int main(void) {
         SDL_RenderTexture(app.renderer, app.normal, NULL, &app.dst_normal);
         SDL_RenderTexture(app.renderer, app.x_gradient, NULL, &app.dst_x_gradient);
         SDL_RenderTexture(app.renderer, app.y_gradient, NULL, &app.dst_y_gradient);
+        SDL_RenderTexture(app.renderer, app.solid, NULL, &app.dst_solid);
+        SDL_RenderTexture(app.renderer, app.shadow, NULL, &app.dst_shadow);
 
         SDL_RenderPresent(app.renderer);
         SDL_Delay((int)(1000 / 60));

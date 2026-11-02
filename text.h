@@ -33,7 +33,9 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-
+// TODO : make_border(surface, color, depth)
+// TODO : make_outline()
+// TODO : limiter la palette de couleur
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT
@@ -49,6 +51,17 @@ typedef enum Gradient_Axis {
 SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
 
 /**
+ * Crée une nouvelle surface ajoutant une ombre à `src`
+ * \param src la surface d'origine
+ * \param color la couleur de l'ombre
+ * \param offset position de l'ombre par rapport à la surface d'origine
+ * \return La nouvelle surface avec l'ombre, NULL en cas d'erreur
+ * \note `src` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `src` est détruit par cette fonction
+ */
+SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
+
+/**
  * Crée un dégradé sur une surface en concervant la transparence
  * \param surface la surface à modifier
  * \param src la couleur de départ du dégradé (en haut ou à gauche)
@@ -62,6 +75,17 @@ SDL_Surface *create_text(const char str[], TTF_Font *font, SDL_Color color);
  */
 bool make_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
                    SDL_Rect *clip, Gradient_Axis axis);
+
+/**
+ * Recolorise une surface en concervant la transparence
+ * \param surface la surface à modifier
+ * \param color la couleur à appliquer
+ * \param clip rectangle à modifier sur `surface`, NULL pour toute la surface
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+bool make_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 
