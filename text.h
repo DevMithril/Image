@@ -66,6 +66,7 @@ SDL_Surface *make_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
  * \param color la couleur des bordures
  * \param depth l'épaisseur des contours (en pixel)
  * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
