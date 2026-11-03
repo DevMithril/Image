@@ -12,6 +12,7 @@
 #define BLACK ((SDL_Color){0, 0, 0, 255})
 #define WHITE ((SDL_Color){200, 200, 200, 200})
 #define ORANGE ((SDL_Color){200, 50, 0, 255})
+#define GREEN ((SDL_Color){50, 150, 0, 255})
 
 typedef enum {
     TEXT_NORMAL,
@@ -19,6 +20,7 @@ typedef enum {
     TEXT_Y_GRADIENT,
     TEXT_SOLID,
     TEXT_SHADOW,
+    TEXT_REPLACE,
     TEXT_BORDER,
     TEXT_OUTLINE,
     TEXT_8_COLORS,
@@ -156,6 +158,13 @@ void load_app_assets(App *app) {
     app->dst[TEXT_SHADOW] = (SDL_FRect){10, 170, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
+    tmp = create_text("Replace", app->font, ORANGE);
+    tmp = img_shadow(tmp, WHITE, (SDL_Point){1, -1});
+    img_replace_color(tmp, ORANGE, GREEN, NULL);
+    app->texture[TEXT_REPLACE] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_REPLACE] = (SDL_FRect){10, 210, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
     tmp = create_text("Border", app->font, ORANGE);
     img_border(tmp, WHITE, 1);
     app->texture[TEXT_BORDER] = surface_to_texture(tmp, app->renderer);
@@ -170,21 +179,21 @@ void load_app_assets(App *app) {
 
     tmp = create_text("8^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
-    img_posterize(tmp, 8, 8, 8, 8);
+    img_posterize(tmp, (SDL_Color){8, 8, 8, 8});
     app->texture[TEXT_8_COLORS] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_8_COLORS] = (SDL_FRect){170, 90, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("16^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
-    img_posterize(tmp, 16, 16, 16, 16);
+    img_posterize(tmp, (SDL_Color){16, 16, 16, 16});
     app->texture[TEXT_16_COLORS] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_16_COLORS] = (SDL_FRect){170, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("32^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
-    img_posterize(tmp, 32, 32, 32, 32);
+    img_posterize(tmp, (SDL_Color){32, 32, 32, 32});
     app->texture[TEXT_32_COLORS] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_32_COLORS] = (SDL_FRect){170, 170, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);

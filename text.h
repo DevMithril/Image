@@ -109,15 +109,27 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
 bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
 
 /**
+ * Remplace `base` par `new` sur zone donnée de `surface`
+ * \param surface la surface à modifier
+ * \param base couleur d'origine à remplacer
+ * \param new nouvelle couleur à appliquer
+ * \param clip rectangle à modifier sur `surface`, NULL pour toute la surface
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+bool img_replace_color(SDL_Surface *surface, SDL_Color base, SDL_Color new, 
+                        SDL_Rect *clip);
+
+/**
  * Limite le nombre de valeurs possibles pour chaque channel de couleur
  * \param surface la surface à modifier
- * \param r nombre de valeurs pour le channel rouge
- * \param g nombre de valeurs pour le channel vert
- * \param b nombre de valeurs pour le channel bleu
- * \param a nombre de valeurs pour le channel alpha
+ * \param ranges nombre de valeurs pour chaque channel
  * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
  */
-bool img_posterize(SDL_Surface *surface, int r, int g, int b, int a);
+bool img_posterize(SDL_Surface *surface, SDL_Color ranges);
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 

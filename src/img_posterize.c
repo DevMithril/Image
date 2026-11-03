@@ -1,14 +1,14 @@
 #include "types.h"
 
-bool img_posterize(SDL_Surface *surface, i32 r, i32 g, i32 b, i32 a) {
-    u8 br, bg, bb, ba;
+bool img_posterize(SDL_Surface *surface, SDL_Color ranges) {
+    u8 r, g, b, a;
     u32 *row;
     const SDL_PixelFormatDetails *format;
     format = SDL_GetPixelFormatDetails(surface->format);
-    r = (r) ? 255 / r : 0;
-    g = (g) ? 255 / g : 0;
-    b = (b) ? 255 / b : 0;
-    a = (a) ? 255 / a : 0;
+    ranges.r = (ranges.r) ? (255 / ranges.r) : 0;
+    ranges.g = (ranges.g) ? (255 / ranges.g) : 0;
+    ranges.b = (ranges.b) ? (255 / ranges.b) : 0;
+    ranges.a = (ranges.a) ? (255 / ranges.a) : 0;
 
     if (!SDL_LockSurface(surface)) {
         SDL_Log("SDL_LockSurface() : %s", SDL_GetError());
@@ -19,12 +19,12 @@ bool img_posterize(SDL_Surface *surface, i32 r, i32 g, i32 b, i32 a) {
         row = (u32*)((u8*)surface->pixels + y * surface->pitch);
 
         for (i32 x = 0; x < surface->w; x++) {
-            SDL_GetRGBA(row[x], format, NULL, &br, &bg, &bb, &ba);
-            br -= br % r;
-            bg -= bg % g;
-            bb -= bb % b;
-            ba -= ba % a;
-            row[x] = SDL_MapSurfaceRGBA(surface, br, bg, bb, ba);
+            SDL_GetRGBA(row[x], format, NULL, &r, &g, &b, &a);
+            r -= r % ranges.r;
+            g -= g % ranges.g;
+            b -= b % ranges.b;
+            a -= a % ranges.a;
+            row[x] = SDL_MapSurfaceRGBA(surface, r, g, b, a);
         }
     }
 
