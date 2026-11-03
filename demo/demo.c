@@ -10,7 +10,7 @@
 #define FONT_SIZE 25
 
 #define BLACK ((SDL_Color){0, 0, 0, 255})
-#define WHITE ((SDL_Color){200, 200, 200, 255})
+#define WHITE ((SDL_Color){200, 200, 200, 200})
 #define ORANGE ((SDL_Color){200, 50, 0, 255})
 
 typedef enum {
