@@ -33,7 +33,6 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : img_outline()
 // TODO : fonction pour limiter la palette de couleur
 typedef enum Gradient_Axis {
     X_GRADIENT,
@@ -64,13 +63,24 @@ SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
  * Dessine des bordures sur les contours des éléments opaques d'une surface
  * \param surface la surface à modifier
  * \param color la couleur RGBA des bordures
- * \param depth l'épaisseur des contours (en pixel)
+ * \param depth l'épaisseur de contour à écraser (en pixel)
  * \return `false` en cas d'échec, `true` sinon
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
 bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+
+/**
+ * Dessine des contours autour des éléments opaques d'une surface
+ * \param src la surface d'origine
+ * \param color la couleur RGBA des contours
+ * \param width l'épaisseur des nouveaux contours (en pixel)
+ * \return La nouvelle surface avec les contours, NULL en cas d'erreur
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` est détruite par cette fonction
+ */
+SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int width);
 
 /**
  * Crée un dégradé sur une surface en concervant la transparence

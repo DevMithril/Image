@@ -1,0 +1,72 @@
+#include "types.h"
+
+/**
+ * Indique si un pixel donné est dans le nouveau contour ou pas
+ */
+bool is_outline(SDL_Surface *old, i32 x, i32 y, i32 width, u8 a) {
+    if (a) {
+        return false;
+    }
+
+    i32 min_x = (x - 2 * width < 0) ? 0 : x - 2 * width;
+    i32 min_y = (y - 2 * width < 0) ? 0 : y - 2 * width;
+    i32 max_x = (x > old->w - 1) ? old->w - 1 : x;
+    i32 max_y = (y > old->h - 1) ? old->h - 1 : y;
+    u32 *row;
+    const SDL_PixelFormatDetails *format;
+    format = SDL_GetPixelFormatDetails(old->format);
+
+    for (i32 sub_y = min_y; sub_y <= max_y; sub_y++) {
+        row = (u32*)((u8*)old->pixels + sub_y * old->pitch);
+
+        for (i32 sub_x = min_x; sub_x <= max_x; sub_x++) {
+            SDL_GetRGBA(row[sub_x], format, NULL, NULL, NULL, NULL, &a);
+            if (a) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, u32 width) {
+    SDL_Surface *new;
+    SDL_Point size = {src->w + 2 * width, src->h + 2 * width};
+    SDL_Rect dst = {width, width, src->w, src->h};
+    u8 r = color.r, g = color.g, b = color.b, a;
+    u32 *row;
+    const SDL_PixelFormatDetails *format;
+    format = SDL_GetPixelFormatDetails(src->format);
+
+    new = SDL_CreateSurface(size.x, size.y, src->format);
+    if (!new) {
+        SDL_Log("SDL_CreateSurface() : %s\n", SDL_GetError());
+        SDL_DestroySurface(src);
+        return NULL;
+    }
+    SDL_BlitSurface(src, NULL, new, &dst);
+
+    if (!SDL_LockSurface(new)) {
+        SDL_Log("SDL_LockSurface() : %s", SDL_GetError());
+        SDL_DestroySurface(src);
+        SDL_DestroySurface(new);
+        return NULL;
+    }
+
+    for (i32 y = 0; y < new->h; y++) {
+        row = (u32*)((u8*)new->pixels + y * new->pitch);
+
+        for (i32 x = 0; x < new->w; x++) {
+            SDL_GetRGBA(row[x], format, NULL, NULL, NULL, NULL, &a);
+            if (is_outline(src, x, y, (i32)width, a)) {
+                row[x] = SDL_MapSurfaceRGBA(new, r, g, b, color.a);
+            }
+        }
+    }
+
+    SDL_UnlockSurface(new);
+    SDL_DestroySurface(src);
+
+    return new;
+}

@@ -10,7 +10,7 @@
 #define FONT_SIZE 25
 
 #define BLACK ((SDL_Color){0, 0, 0, 255})
-#define WHITE ((SDL_Color){200, 200, 200, 200})
+#define WHITE ((SDL_Color){200, 200, 200, 255})
 #define ORANGE ((SDL_Color){200, 50, 0, 255})
 
 typedef enum {
@@ -20,6 +20,7 @@ typedef enum {
     TEXT_SOLID,
     TEXT_SHADOW,
     TEXT_BORDER,
+    TEXT_OUTLINE,
     TEXT_COUNT
 } Text;
 
@@ -156,6 +157,12 @@ void load_app_assets(App *app) {
     img_border(tmp, WHITE, 1);
     app->texture[TEXT_BORDER] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_BORDER] = (SDL_FRect){170, 10, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Outline", app->font, ORANGE);
+    tmp = img_outline(tmp, WHITE, 1);
+    app->texture[TEXT_OUTLINE] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_OUTLINE] = (SDL_FRect){170, 50, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 }
 
