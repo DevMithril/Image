@@ -21,6 +21,9 @@ typedef enum {
     TEXT_SHADOW,
     TEXT_BORDER,
     TEXT_OUTLINE,
+    TEXT_8_COLORS,
+    TEXT_16_COLORS,
+    TEXT_32_COLORS,
     TEXT_COUNT
 } Text;
 
@@ -163,6 +166,27 @@ void load_app_assets(App *app) {
     tmp = img_outline(tmp, WHITE, 1);
     app->texture[TEXT_OUTLINE] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_OUTLINE] = (SDL_FRect){170, 50, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("8^3 Colors", app->font, ORANGE);
+    img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
+    img_posterize(tmp, 8, 8, 8, 8);
+    app->texture[TEXT_8_COLORS] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_8_COLORS] = (SDL_FRect){170, 90, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("16^3 Colors", app->font, ORANGE);
+    img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
+    img_posterize(tmp, 16, 16, 16, 16);
+    app->texture[TEXT_16_COLORS] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_16_COLORS] = (SDL_FRect){170, 130, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("32^3 Colors", app->font, ORANGE);
+    img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
+    img_posterize(tmp, 32, 32, 32, 32);
+    app->texture[TEXT_32_COLORS] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_32_COLORS] = (SDL_FRect){170, 170, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 }
 

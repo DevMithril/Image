@@ -33,7 +33,7 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : fonction pour limiter la palette de couleur
+
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT
@@ -107,6 +107,17 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
  * \note `surface` n'est pas détruit par cette fonction
  */
 bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
+
+/**
+ * Limite le nombre de valeurs possibles pour chaque channel de couleur
+ * \param surface la surface à modifier
+ * \param r nombre de valeurs pour le channel rouge
+ * \param g nombre de valeurs pour le channel vert
+ * \param b nombre de valeurs pour le channel bleu
+ * \param a nombre de valeurs pour le channel alpha
+ * \return `false` en cas d'échec, `true` sinon
+ */
+bool img_posterize(SDL_Surface *surface, int r, int g, int b, int a);
 
 /**
  * Converti une surface en texture pouvant être utilisée comme 
