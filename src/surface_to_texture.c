@@ -17,6 +17,7 @@ SDL_Texture *surface_to_texture(SDL_Surface *surface, SDL_Renderer *renderer) {
     }
 
     SDL_SetRenderTarget(renderer, texture);
+    SDL_RenderClear(renderer);
     SDL_RenderTexture(renderer, tmp, NULL, NULL);
     SDL_DestroyTexture(tmp);
     SDL_SetRenderTarget(renderer, NULL);
