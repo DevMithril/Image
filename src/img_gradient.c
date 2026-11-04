@@ -29,10 +29,10 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
     for (i32 y = area.y; y < area.y + area.h; y++) {
         if (axis == Y_GRADIENT) {
             t = (f32)(y - area.y) * inv_delta;
-            r = (u8)(dst.r + (src.r - dst.r) * t);
-            g = (u8)(dst.g + (src.g - dst.g) * t);
-            b = (u8)(dst.b + (src.b - dst.b) * t);
-            a = (u8)(dst.a + (src.a - dst.a) * t);
+            r = (u8)(src.r + (dst.r - src.r) * t);
+            g = (u8)(src.g + (dst.g - src.g) * t);
+            b = (u8)(src.b + (dst.b - src.b) * t);
+            a = (u8)(src.a + (dst.a - src.a) * t);
         }
 
         row = (u32*)((u8*)surface->pixels + y * surface->pitch);
@@ -40,10 +40,10 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
         for (i32 x = area.x; x < area.x + area.w; x++) {
             if (axis == X_GRADIENT) {
                 t = (f32)(x - area.x) * inv_delta;
-                r = (u8)(dst.r + (src.r - dst.r) * t);
-                g = (u8)(dst.g + (src.g - dst.g) * t);
-                b = (u8)(dst.b + (src.b - dst.b) * t);
-                a = (u8)(dst.a + (src.a - dst.a) * t);
+                r = (u8)(src.r + (dst.r - src.r) * t);
+                g = (u8)(src.g + (dst.g - src.g) * t);
+                b = (u8)(src.b + (dst.b - src.b) * t);
+                a = (u8)(src.a + (dst.a - src.a) * t);
             }
 
             SDL_GetRGBA(row[x], format, NULL, &br, &bg, &bb, &ba);
