@@ -5,10 +5,10 @@ bool img_posterize(SDL_Surface *surface, SDL_Color ranges) {
     u32 *row;
     const SDL_PixelFormatDetails *format;
     format = SDL_GetPixelFormatDetails(surface->format);
-    ranges.r = (ranges.r) ? (255 / ranges.r) : 0;
-    ranges.g = (ranges.g) ? (255 / ranges.g) : 0;
-    ranges.b = (ranges.b) ? (255 / ranges.b) : 0;
-    ranges.a = (ranges.a) ? (255 / ranges.a) : 0;
+    ranges.r = (ranges.r) ? (255 / ranges.r) : 1;
+    ranges.g = (ranges.g) ? (255 / ranges.g) : 1;
+    ranges.b = (ranges.b) ? (255 / ranges.b) : 1;
+    ranges.a = (ranges.a) ? (255 / ranges.a) : 1;
 
     if (!SDL_LockSurface(surface)) {
         SDL_Log("SDL_LockSurface() : %s", SDL_GetError());
