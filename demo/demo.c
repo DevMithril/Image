@@ -26,6 +26,7 @@ typedef enum {
     TEXT_8_COLORS,
     TEXT_16_COLORS,
     TEXT_32_COLORS,
+    TEXT_DOUBLE_GRADIENT,
     TEXT_COUNT
 } Text;
 
@@ -196,6 +197,12 @@ void load_app_assets(App *app) {
     img_posterize(tmp, (SDL_Color){32, 32, 32, 32});
     app->texture[TEXT_32_COLORS] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_32_COLORS] = (SDL_FRect){170, 170, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Double Gradient", app->font, ORANGE);
+    img_double_gradient(tmp, ORANGE, WHITE, 0.5f, X_GRADIENT);
+    app->texture[TEXT_DOUBLE_GRADIENT] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_DOUBLE_GRADIENT] = (SDL_FRect){170, 210, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 }
 

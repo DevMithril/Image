@@ -96,6 +96,20 @@ SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int width);
  */
 bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
                    SDL_Rect *clip, Gradient_Axis axis);
+/**
+ * Crée un double dégradé sur une surface en concervant la transparence
+ * \param surface la surface à modifier
+ * \param src la couleur RGBA de départ du dégradé
+ * \param dst la couleur RGBA d'arrivée du dégradé
+ * \param gradient_mid point de départ du dégradé sur l'axe (en %)
+ * \param axis axe sur lequel sera fait le dégradé
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+
+bool img_double_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
+                            float gradient_mid, Gradient_Axis axis);
 
 /**
  * Recolorise une surface en concervant la transparence
