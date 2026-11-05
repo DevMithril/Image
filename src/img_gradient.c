@@ -17,9 +17,16 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
     }
 
     format = SDL_GetPixelFormatDetails(surface->format);
-    inv_delta = (axis == X_GRADIENT) ?
-        ((area.w > 1) ? 1.0f / (f32)(area.w - 1) : 0.0f) :
-        ((area.h > 1) ? 1.0f / (f32)(area.h - 1) : 0.0f);
+    switch (axis) {
+    case X_GRADIENT :
+        inv_delta = ((area.w > 1) ? 1.0f / (f32)(area.w - 1) : 0.0f);
+    break;
+    case Y_GRADIENT :
+        inv_delta = ((area.h > 1) ? 1.0f / (f32)(area.h - 1) : 0.0f);
+    break;
+    default :
+        return true;
+    }
 
     if (!SDL_LockSurface(surface)) {
         SDL_Log("SDL_LockSurface() : %s", SDL_GetError());

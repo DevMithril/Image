@@ -36,7 +36,8 @@ subject to the following restrictions:
 
 typedef enum Gradient_Axis {
     X_GRADIENT,
-    Y_GRADIENT
+    Y_GRADIENT,
+    NO_GRADIENT
 } Gradient_Axis;
 
 /**

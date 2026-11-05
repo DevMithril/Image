@@ -18,7 +18,8 @@ typedef double f64;
 
 typedef enum Gradient_Axis {
     X_GRADIENT,
-    Y_GRADIENT
+    Y_GRADIENT,
+    NO_GRADIENT
 } Gradient_Axis;
 
 #endif
