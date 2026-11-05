@@ -137,6 +137,16 @@ bool img_replace_color(SDL_Surface *surface, SDL_Color base, SDL_Color new,
                         SDL_Rect *clip);
 
 /**
+ * Inverse les couleurs d'une surface (en concervant l'alpha)
+ * \param surface la surface à modifier
+ * \param clip rectangle à modifier sur `surface`, NULL pour toute la surface
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+bool img_negative(SDL_Surface *surface, SDL_Rect *clip);
+
+/**
  * Limite le nombre de valeurs possibles pour chaque channel de couleur
  * \param surface la surface à modifier
  * \param ranges nombre de valeurs pour chaque channel
