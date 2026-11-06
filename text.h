@@ -33,7 +33,7 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : shade border
+
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT,
@@ -64,13 +64,28 @@ SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
  * Dessine des bordures sur les contours des éléments opaques d'une surface
  * \param surface la surface à modifier
  * \param color la couleur RGBA des bordures
+ * \param d_px l'épaisseur de contour à écraser (en pixel) du côté droit
+ * \param d_nx l'épaisseur de contour à écraser (en pixel) du côté gauche
+ * \param d_py l'épaisseur de contour à écraser (en pixel) du côté bas
+ * \param d_ny l'épaisseur de contour à écraser (en pixel) du côté haut
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ * \note les bordures conservent la transparence initiale
+ */
+bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int d_px,
+                unsigned int d_nx, unsigned int d_py, unsigned int d_ny);
+/**
+ * Dessine des bordures sur les contours des éléments opaques d'une surface
+ * \param surface la surface à modifier
+ * \param color la couleur RGBA des bordures
  * \param depth l'épaisseur de contour à écraser (en pixel)
  * \return `false` en cas d'échec, `true` sinon
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
-bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+bool img_full_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
 
 /**
  * Dessine des contours autour des éléments opaques d'une surface
