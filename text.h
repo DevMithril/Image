@@ -33,7 +33,7 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-
+// TODO : shade border
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT,
