@@ -33,8 +33,7 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-// TODO : effet de glow ou d'aura
-//        (outline seulement à partir d'une distance donnée)
+
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT,
@@ -130,6 +129,20 @@ SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int w_px,
  */
 SDL_Surface *img_full_outline(SDL_Surface *src, SDL_Color color,
                                 unsigned int width);
+
+/**
+ * Dessine des contours autour des éléments opaques d'une surface
+ * \param src la surface d'origine
+ * \param color la couleur RGBA des contours
+ * \param start la distance (en pixels) à laquelle se trouve
+                les nouveaux contours
+ * \param width l'épaisseur des nouveaux contours (en pixel)
+ * \return La nouvelle surface avec les contours, NULL en cas d'erreur
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` est détruite par cette fonction
+ */
+SDL_Surface *img_spaced_outline(SDL_Surface *src, SDL_Color color,
+                                unsigned int start, unsigned int width);
 
 /**
  * Crée un dégradé sur une surface en concervant la transparence
