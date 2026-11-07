@@ -1,11 +1,13 @@
 #include "types.h"
 
-bool _img_is_outline(SDL_Surface *old, i32 x, i32 y, i32 width, u8 a);
+bool _img_is_outline(SDL_Surface *old, i32 x, i32 y, u8 a,
+                        u32 w_px, u32 w_nx, u32 w_py, u32 w_ny);
 
-SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, u32 width) {
+SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color,
+                            u32 w_px, u32 w_nx, u32 w_py, u32 w_ny) {
     SDL_Surface *new;
-    SDL_Point size = {src->w + 2 * width, src->h + 2 * width};
-    SDL_Rect dst = {width, width, src->w, src->h};
+    SDL_Point size = {src->w + w_px + w_nx, src->h + w_py + w_ny};
+    SDL_Rect dst = {w_nx, w_ny, src->w, src->h};
     u8 r = color.r, g = color.g, b = color.b, a;
     u32 *row;
     const SDL_PixelFormatDetails *format;
@@ -31,7 +33,7 @@ SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, u32 width) {
 
         for (i32 x = 0; x < new->w; x++) {
             SDL_GetRGBA(row[x], format, NULL, NULL, NULL, NULL, &a);
-            if (_img_is_outline(src, x, y, (i32)width, a)) {
+            if (_img_is_outline(src, x, y, a, w_px, w_nx, w_py, w_ny)) {
                 row[x] = SDL_MapSurfaceRGBA(new, r, g, b, color.a);
             }
         }

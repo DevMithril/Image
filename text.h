@@ -33,7 +33,8 @@ subject to the following restrictions:
     Text
 ================================================================================
 */
-
+// TODO : effet de glow ou d'aura
+//        (outline seulement à partir d'une distance donnée)
 typedef enum Gradient_Axis {
     X_GRADIENT,
     Y_GRADIENT,
@@ -91,12 +92,28 @@ bool img_full_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
  * Dessine des contours autour des éléments opaques d'une surface
  * \param src la surface d'origine
  * \param color la couleur RGBA des contours
+ * \param w_px l'épaisseur des nouveaux contours (en pixel) du côté droit
+ * \param w_nx l'épaisseur des nouveaux contours (en pixel) du côté gauche
+ * \param w_py l'épaisseur des nouveaux contours (en pixel) du côté bas
+ * \param w_ny l'épaisseur des nouveaux contours (en pixel) du côté haut
+ * \return La nouvelle surface avec les contours, NULL en cas d'erreur
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` est détruite par cette fonction
+ */
+SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int w_px,
+                unsigned int w_nx, unsigned int w_py, unsigned int w_ny);
+
+/**
+ * Dessine des contours autour des éléments opaques d'une surface
+ * \param src la surface d'origine
+ * \param color la couleur RGBA des contours
  * \param width l'épaisseur des nouveaux contours (en pixel)
  * \return La nouvelle surface avec les contours, NULL en cas d'erreur
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` est détruite par cette fonction
  */
-SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int width);
+SDL_Surface *img_full_outline(SDL_Surface *src, SDL_Color color,
+                                unsigned int width);
 
 /**
  * Crée un dégradé sur une surface en concervant la transparence

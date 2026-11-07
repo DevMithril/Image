@@ -5,20 +5,27 @@
  * \param old ancienne surface
  * \param x coordonnée x du pixel sur la nouvelle surface
  * \param y coordonnée y du pixel sur la nouvelle surface
- * \param width l'épaisseur des nouveaux contours (en pixel)
  * \param a la valeur de l'alpha du pixel
+ * \param w_px l'épaisseur des nouveaux contours (en pixel) du côté droit
+ * \param w_nx l'épaisseur des nouveaux contours (en pixel) du côté gauche
+ * \param w_py l'épaisseur des nouveaux contours (en pixel) du côté bas
+ * \param w_ny l'épaisseur des nouveaux contours (en pixel) du côté haut
  * \return `true` si le pixel est sur le contour à dessiner, `false` sinon
  * \note `old` n'est ni détruit, ni modifié par cette fonction
  */
-bool _img_is_outline(SDL_Surface *old, i32 x, i32 y, i32 width, u8 a) {
+bool _img_is_outline(SDL_Surface *old, i32 x, i32 y, u8 a,
+                        u32 w_px, u32 w_nx, u32 w_py, u32 w_ny) {
     if (a) {
         return false;
     }
 
-    i32 min_x = (x - 2 * width < 0) ? 0 : x - 2 * width;
-    i32 min_y = (y - 2 * width < 0) ? 0 : y - 2 * width;
-    i32 max_x = (x > old->w - 1) ? old->w - 1 : x;
-    i32 max_y = (y > old->h - 1) ? old->h - 1 : y;
+    x -= (i32)w_nx;
+    y -= (i32)w_ny;
+
+    i32 min_x = (x - (i32)w_px < 0) ? 0 : x - (i32)w_px;
+    i32 min_y = (y - (i32)w_py < 0) ? 0 : y - (i32)w_py;
+    i32 max_x = (x + (i32)w_nx > old->w - 1) ? old->w - 1 : x + (i32)w_nx;
+    i32 max_y = (y + (i32)w_ny > old->h - 1) ? old->h - 1 : y + (i32)w_ny;
     u32 *row;
     const SDL_PixelFormatDetails *format;
     format = SDL_GetPixelFormatDetails(old->format);
