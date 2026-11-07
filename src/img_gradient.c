@@ -18,10 +18,10 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
 
     format = SDL_GetPixelFormatDetails(surface->format);
     switch (axis) {
-    case X_GRADIENT :
+    case GRADIENT_X :
         inv_delta = ((area.w > 1) ? 1.0f / (f32)(area.w - 1) : 0.0f);
     break;
-    case Y_GRADIENT :
+    case GRADIENT_Y :
         inv_delta = ((area.h > 1) ? 1.0f / (f32)(area.h - 1) : 0.0f);
     break;
     default :
@@ -34,7 +34,7 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
     }
 
     for (i32 y = area.y; y < area.y + area.h; y++) {
-        if (axis == Y_GRADIENT) {
+        if (axis == GRADIENT_Y) {
             t = (f32)(y - area.y) * inv_delta;
             r = (u8)(src.r + (dst.r - src.r) * t);
             g = (u8)(src.g + (dst.g - src.g) * t);
@@ -45,7 +45,7 @@ bool img_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
         row = (u32*)((u8*)surface->pixels + y * surface->pitch);
 
         for (i32 x = area.x; x < area.x + area.w; x++) {
-            if (axis == X_GRADIENT) {
+            if (axis == GRADIENT_X) {
                 t = (f32)(x - area.x) * inv_delta;
                 r = (u8)(src.r + (dst.r - src.r) * t);
                 g = (u8)(src.g + (dst.g - src.g) * t);

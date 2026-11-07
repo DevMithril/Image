@@ -35,10 +35,27 @@ subject to the following restrictions:
 */
 
 typedef enum Gradient_Axis {
-    X_GRADIENT,
-    Y_GRADIENT,
-    NO_GRADIENT
+    GRADIENT_NONE,
+    GRADIENT_X,
+    GRADIENT_Y
 } Gradient_Axis;
+
+// Peut être initialisée à zéro sans risques
+typedef struct Style_Config {
+    SDL_Point shadow_offset;
+    Gradient_Axis gradient_axis;
+    float gradient_mid;
+    unsigned int border;
+    unsigned int border_margin;
+    unsigned int outline;
+    unsigned int outline_margin;
+    SDL_Color primary;
+    SDL_Color secondary;
+    SDL_Color shadow_color;
+    SDL_Color border_color;
+    SDL_Color outline_color;
+    SDL_Color posterize_values;
+} Style_Config;
 
 /**
  * Crée une surface au format SDL_PIXELFORMAT_RGBA32 avec un texte dessus

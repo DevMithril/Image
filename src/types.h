@@ -17,9 +17,25 @@ typedef float f32;
 typedef double f64;
 
 typedef enum Gradient_Axis {
-    X_GRADIENT,
-    Y_GRADIENT,
-    NO_GRADIENT
+    GRADIENT_NONE,
+    GRADIENT_X,
+    GRADIENT_Y
 } Gradient_Axis;
+
+typedef struct Style_Config {
+    SDL_Point shadow_offset;
+    Gradient_Axis gradient_axis;
+    f32 gradient_mid;
+    u32 border;
+    u32 border_margin;
+    u32 outline;
+    u32 outline_margin;
+    SDL_Color primary;
+    SDL_Color secondary;
+    SDL_Color shadow_color;
+    SDL_Color border_color;
+    SDL_Color outline_color;
+    SDL_Color posterize_values;
+} Style_Config;
 
 #endif

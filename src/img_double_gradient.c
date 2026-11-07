@@ -9,12 +9,12 @@ bool img_double_gradient(SDL_Surface *surface, SDL_Color src, SDL_Color dst,
     clip1 = clip2;
 
     switch (axis) {
-    case X_GRADIENT :
+    case GRADIENT_X :
         clip1.w = (i32)(clip1.w * gradient_mid);
         clip2.x = clip1.w;
         clip2.w -= clip1.w;
     break;
-    case Y_GRADIENT :
+    case GRADIENT_Y :
         clip1.h = (i32)(clip1.h * gradient_mid);
         clip2.y = clip1.w;
         clip2.h -= clip1.w;
