@@ -25,6 +25,7 @@ typedef enum {
     TEXT_SHADOW,
     TEXT_REPLACE,
     TEXT_MASK,
+    TEXT_SPACED_BORDER,
     TEXT_FULL_BORDER,
     TEXT_BORDERS,
     TEXT_FULL_OUTLINE,
@@ -186,19 +187,25 @@ void load_app_assets(App *app) {
     app->dst[TEXT_FULL_BORDER] = (SDL_FRect){170, 10, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
+    tmp = create_text("Spaced Border", app->font, ORANGE);
+    img_spaced_border(tmp, WHITE, 1, 1);
+    app->texture[TEXT_SPACED_BORDER] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_SPACED_BORDER] = (SDL_FRect){170, 30, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
     tmp = create_text("Borders", app->font, ORANGE);
     img_border(tmp, FULL_WHITE, 0, 1, 0, 0);
     img_border(tmp, DARK_RED, 1, 0, 0, 0);
     img_border(tmp, DARK_RED, 0, 0, 1, 0);
     img_border(tmp, FULL_WHITE, 0, 0, 0, 1);
     app->texture[TEXT_BORDERS] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_BORDERS] = (SDL_FRect){170, 30, tmp->w, tmp->h};
+    app->dst[TEXT_BORDERS] = (SDL_FRect){170, 50, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Full Outline", app->font, ORANGE);
     tmp = img_full_outline(tmp, WHITE, 1);
     app->texture[TEXT_FULL_OUTLINE] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_FULL_OUTLINE] = (SDL_FRect){170, 50, tmp->w, tmp->h};
+    app->dst[TEXT_FULL_OUTLINE] = (SDL_FRect){170, 70, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Outlines", app->font, ORANGE);
@@ -207,41 +214,41 @@ void load_app_assets(App *app) {
     tmp = img_outline(tmp, DARK_RED, 0, 0, 1, 0);
     tmp = img_outline(tmp, FULL_WHITE, 0, 0, 0, 1);
     app->texture[TEXT_OUTLINES] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_OUTLINES] = (SDL_FRect){170, 70, tmp->w, tmp->h};
+    app->dst[TEXT_OUTLINES] = (SDL_FRect){170, 90, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("8^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
     img_posterize(tmp, (SDL_Color){8, 8, 8, 8});
     app->texture[TEXT_8_COLORS] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_8_COLORS] = (SDL_FRect){170, 90, tmp->w, tmp->h};
+    app->dst[TEXT_8_COLORS] = (SDL_FRect){170, 110, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("16^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
     img_posterize(tmp, (SDL_Color){16, 16, 16, 16});
     app->texture[TEXT_16_COLORS] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_16_COLORS] = (SDL_FRect){170, 110, tmp->w, tmp->h};
+    app->dst[TEXT_16_COLORS] = (SDL_FRect){170, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("32^3 Colors", app->font, ORANGE);
     img_gradient(tmp, ORANGE, WHITE, NULL, Y_GRADIENT);
     img_posterize(tmp, (SDL_Color){32, 32, 32, 32});
     app->texture[TEXT_32_COLORS] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_32_COLORS] = (SDL_FRect){170, 130, tmp->w, tmp->h};
+    app->dst[TEXT_32_COLORS] = (SDL_FRect){170, 150, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Double Gradient", app->font, ORANGE);
     img_double_gradient(tmp, ORANGE, WHITE, 0.5f, X_GRADIENT);
     app->texture[TEXT_DOUBLE_GRADIENT] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_DOUBLE_GRADIENT] = (SDL_FRect){170, 150, tmp->w, tmp->h};
+    app->dst[TEXT_DOUBLE_GRADIENT] = (SDL_FRect){170, 170, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Negative", app->font, ORANGE);
     img_double_gradient(tmp, ORANGE, WHITE, 0.5f, X_GRADIENT);
     img_negative(tmp, NULL);
     app->texture[TEXT_NEGATIVE] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_NEGATIVE] = (SDL_FRect){170, 170, tmp->w, tmp->h};
+    app->dst[TEXT_NEGATIVE] = (SDL_FRect){170, 190, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 }
 

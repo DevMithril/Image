@@ -76,6 +76,7 @@ SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset);
  */
 bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int d_px,
                 unsigned int d_nx, unsigned int d_py, unsigned int d_ny);
+
 /**
  * Dessine des bordures sur les contours des éléments opaques d'une surface
  * \param surface la surface à modifier
@@ -87,6 +88,21 @@ bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int d_px,
  * \note les bordures conservent la transparence initiale
  */
 bool img_full_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+
+/**
+ * Dessine des bordures sur les contours des éléments opaques d'une surface
+ * avec un espacement laissé intact
+ * \param surface la surface à modifier
+ * \param color la couleur RGBA des bordures
+ * \param depth l'épaisseur de contour à épargner (en pixel)
+ * \param width l'épaisseur de contour à écraser (en pixel)
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ * \note les bordures conservent la transparence initiale
+ */
+bool img_spaced_border(SDL_Surface *surface, SDL_Color color,
+                        unsigned int depth, unsigned int width);
 
 /**
  * Dessine des contours autour des éléments opaques d'une surface
