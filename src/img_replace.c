@@ -27,8 +27,8 @@ bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new,
 
         for (i32 x = area.x; x < area.x + area.w; x++) {
             SDL_GetRGBA(row[x], format, NULL, &r, &g, &b, &a);
-            if (r == base.r && g == base.g && b == base.b) {
-                row[x] = SDL_MapSurfaceRGBA(surface, new.r, new.g, new.b, a);
+            if (r == base.r && g == base.g && b == base.b && a == base.a) {
+                row[x] = SDL_MapSurfaceRGBA(surface, new.r, new.g, new.b, new.a);
             }
         }
     }
