@@ -1,7 +1,7 @@
 #include "types.h"
 
-bool img_replace_color(SDL_Surface *surface, SDL_Color base, SDL_Color new,
-                        SDL_Rect *clip) {
+bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new,
+                    SDL_Rect *clip) {
     u8 r, g, b, a;
     u32 *row;
     const SDL_PixelFormatDetails *format;

@@ -165,8 +165,8 @@ bool img_solid(SDL_Surface *surface, SDL_Color color, SDL_Rect *clip);
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` n'est pas détruit par cette fonction
  */
-bool img_replace_color(SDL_Surface *surface, SDL_Color base, SDL_Color new, 
-                        SDL_Rect *clip);
+bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new, 
+                    SDL_Rect *clip);
 
 /**
  * Inverse les couleurs d'une surface (en concervant l'alpha)

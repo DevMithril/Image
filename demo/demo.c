@@ -166,7 +166,7 @@ void load_app_assets(App *app) {
 
     tmp = create_text("Replace", app->font, ORANGE);
     tmp = img_shadow(tmp, WHITE, (SDL_Point){1, -1});
-    img_replace_color(tmp, ORANGE, GREEN, NULL);
+    img_replace(tmp, ORANGE, GREEN, NULL);
     app->texture[TEXT_REPLACE] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_REPLACE] = (SDL_FRect){10, 110, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
