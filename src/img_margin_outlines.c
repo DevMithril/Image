@@ -1,11 +1,11 @@
 #include "types.h"
 
-SDL_Surface *img_full_outline(SDL_Surface *src, SDL_Color color, u32 width);
+SDL_Surface *img_outlines(SDL_Surface *src, SDL_Color color, u32 width);
 bool img_mask(SDL_Surface *surface, SDL_Color keep, SDL_Color new);
 bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new,
                     SDL_Rect *clip);
 
-SDL_Surface *img_spaced_outline(SDL_Surface *src, SDL_Color color,
+SDL_Surface *img_margin_outlines(SDL_Surface *src, SDL_Color color,
                                 u32 start, u32 width) {
     SDL_Surface *mask = NULL;
     SDL_Rect dst = {start + width, start + width, src->w, src->h};
@@ -19,12 +19,12 @@ SDL_Surface *img_spaced_outline(SDL_Surface *src, SDL_Color color,
         return NULL;
     }
 
-    mask = img_full_outline(mask, random_color, start);
+    mask = img_outlines(mask, random_color, start);
     if (!mask) {
         SDL_DestroySurface(src);
         return NULL;
     }
-    mask = img_full_outline(mask, color, width);
+    mask = img_outlines(mask, color, width);
     if (!mask) {
         SDL_DestroySurface(src);
         return NULL;

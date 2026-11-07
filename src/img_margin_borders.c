@@ -1,11 +1,11 @@
 #include "types.h"
 
-bool img_full_border(SDL_Surface *surface, SDL_Color color, u32 depth);
+bool img_borders(SDL_Surface *surface, SDL_Color color, u32 depth);
 bool img_mask(SDL_Surface *surface, SDL_Color keep, SDL_Color new);
 bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new,
                     SDL_Rect *clip);
 
-bool img_spaced_border(SDL_Surface *surface, SDL_Color color,
+bool img_margin_borders(SDL_Surface *surface, SDL_Color color,
                         u32 depth, u32 width) {
     SDL_Surface *mask = NULL;
     SDL_Color mask_color = color;
@@ -19,8 +19,8 @@ bool img_spaced_border(SDL_Surface *surface, SDL_Color color,
         return false;
     }
 
-    if (!img_full_border(mask, mask_color, depth + width) ||
-        !img_full_border(mask, random_color, depth) ||
+    if (!img_borders(mask, mask_color, depth + width) ||
+        !img_borders(mask, random_color, depth) ||
         !img_mask(mask, mask_color, (SDL_Color){0, 0, 0, 0}) ||
         !img_replace(mask, mask_color, color, NULL)) {
         SDL_DestroySurface(mask);

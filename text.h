@@ -86,7 +86,7 @@ bool img_border(SDL_Surface *surface, SDL_Color color, unsigned int d_px,
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
-bool img_full_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
+bool img_borders(SDL_Surface *surface, SDL_Color color, unsigned int depth);
 
 /**
  * Dessine des bordures sur les contours des éléments opaques d'une surface
@@ -100,7 +100,7 @@ bool img_full_border(SDL_Surface *surface, SDL_Color color, unsigned int depth);
  * \note `surface` n'est pas détruit par cette fonction
  * \note les bordures conservent la transparence initiale
  */
-bool img_spaced_border(SDL_Surface *surface, SDL_Color color,
+bool img_margin_borders(SDL_Surface *surface, SDL_Color color,
                         unsigned int depth, unsigned int width);
 
 /**
@@ -127,21 +127,21 @@ SDL_Surface *img_outline(SDL_Surface *src, SDL_Color color, unsigned int w_px,
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` est détruite par cette fonction
  */
-SDL_Surface *img_full_outline(SDL_Surface *src, SDL_Color color,
+SDL_Surface *img_outlines(SDL_Surface *src, SDL_Color color,
                                 unsigned int width);
 
 /**
  * Dessine des contours autour des éléments opaques d'une surface
  * \param src la surface d'origine
  * \param color la couleur RGBA des contours
- * \param start la distance (en pixels) à laquelle se trouve
+ * \param start la distance (en pixels) à laquelle se trouvent
                 les nouveaux contours
  * \param width l'épaisseur des nouveaux contours (en pixel)
  * \return La nouvelle surface avec les contours, NULL en cas d'erreur
  * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
  * \note `surface` est détruite par cette fonction
  */
-SDL_Surface *img_spaced_outline(SDL_Surface *src, SDL_Color color,
+SDL_Surface *img_margin_outlines(SDL_Surface *src, SDL_Color color,
                                 unsigned int start, unsigned int width);
 
 /**

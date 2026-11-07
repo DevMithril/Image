@@ -25,12 +25,12 @@ typedef enum {
     TEXT_SHADOW,
     TEXT_REPLACE,
     TEXT_MASK,
-    TEXT_FULL_BORDER,
-    TEXT_SPACED_BORDER,
     TEXT_BORDERS,
-    TEXT_FULL_OUTLINE,
-    TEXT_SPACED_OUTLINE,
+    TEXT_MARGIN_BORDERS,
+    TEXT_BORDER,
     TEXT_OUTLINES,
+    TEXT_MARGIN_OUTLINES,
+    TEXT_OUTLINE,
     TEXT_8_COLORS,
     TEXT_16_COLORS,
     TEXT_32_COLORS,
@@ -182,46 +182,46 @@ void load_app_assets(App *app) {
     app->dst[TEXT_MASK] = (SDL_FRect){10, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
-    tmp = create_text("Full Border", app->font, ORANGE);
-    img_full_border(tmp, WHITE, 1);
-    app->texture[TEXT_FULL_BORDER] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_FULL_BORDER] = (SDL_FRect){170, 10, tmp->w, tmp->h};
-    SDL_DestroySurface(tmp);
-
-    tmp = create_text("Spaced Border", app->font, ORANGE);
-    img_spaced_border(tmp, WHITE, 1, 1);
-    app->texture[TEXT_SPACED_BORDER] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_SPACED_BORDER] = (SDL_FRect){170, 30, tmp->w, tmp->h};
-    SDL_DestroySurface(tmp);
-
     tmp = create_text("Borders", app->font, ORANGE);
+    img_borders(tmp, WHITE, 1);
+    app->texture[TEXT_BORDERS] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_BORDERS] = (SDL_FRect){170, 10, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Margin Borders", app->font, ORANGE);
+    img_margin_borders(tmp, WHITE, 1, 1);
+    app->texture[TEXT_MARGIN_BORDERS] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_MARGIN_BORDERS] = (SDL_FRect){170, 30, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Border", app->font, ORANGE);
     img_border(tmp, FULL_WHITE, 0, 1, 0, 0);
     img_border(tmp, DARK_RED, 1, 0, 0, 0);
     img_border(tmp, DARK_RED, 0, 0, 1, 0);
     img_border(tmp, FULL_WHITE, 0, 0, 0, 1);
-    app->texture[TEXT_BORDERS] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_BORDERS] = (SDL_FRect){170, 50, tmp->w, tmp->h};
-    SDL_DestroySurface(tmp);
-
-    tmp = create_text("Full Outline", app->font, ORANGE);
-    tmp = img_full_outline(tmp, WHITE, 1);
-    app->texture[TEXT_FULL_OUTLINE] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_FULL_OUTLINE] = (SDL_FRect){170, 70, tmp->w, tmp->h};
-    SDL_DestroySurface(tmp);
-
-    tmp = create_text("Spaced Outline", app->font, ORANGE);
-    tmp = img_spaced_outline(tmp, WHITE, 1, 1);
-    app->texture[TEXT_SPACED_OUTLINE] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_SPACED_OUTLINE] = (SDL_FRect){170, 90, tmp->w, tmp->h};
+    app->texture[TEXT_BORDER] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_BORDER] = (SDL_FRect){170, 50, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Outlines", app->font, ORANGE);
+    tmp = img_outlines(tmp, WHITE, 1);
+    app->texture[TEXT_OUTLINES] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_OUTLINES] = (SDL_FRect){170, 70, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Margin Outlines", app->font, ORANGE);
+    tmp = img_margin_outlines(tmp, WHITE, 1, 1);
+    app->texture[TEXT_MARGIN_OUTLINES] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_MARGIN_OUTLINES] = (SDL_FRect){170, 90, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Outline", app->font, ORANGE);
     tmp = img_outline(tmp, FULL_WHITE, 0, 1, 0, 0);
     tmp = img_outline(tmp, DARK_RED, 1, 0, 0, 0);
     tmp = img_outline(tmp, DARK_RED, 0, 0, 1, 0);
     tmp = img_outline(tmp, FULL_WHITE, 0, 0, 0, 1);
-    app->texture[TEXT_OUTLINES] = surface_to_texture(tmp, app->renderer);
-    app->dst[TEXT_OUTLINES] = (SDL_FRect){170, 110, tmp->w, tmp->h};
+    app->texture[TEXT_OUTLINE] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_OUTLINE] = (SDL_FRect){170, 110, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("8^3 Colors", app->font, ORANGE);
