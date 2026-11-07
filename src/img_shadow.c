@@ -43,3 +43,5 @@ SDL_Surface *img_shadow(SDL_Surface *src, SDL_Color color, SDL_Point offset) {
 
     return new;
 }
+
+#undef abs

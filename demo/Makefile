@@ -1,10 +1,10 @@
 CC= gcc
 CFLAGS= -Wall -Wextra -pedantic -std=c99
-LDFLAGS= -L../ -Wl,-rpath=../ -ltext -lSDL3 -lSDL3_ttf
+LDFLAGS= -L../ -Wl,-rpath=../ -limage -lSDL3 -lSDL3_ttf
 
-EXEC= demo_text
+EXEC= demo_image
 DEMO_SRC= demo.c
-LIBSO= ../libtext.so
+LIBSO= ../libimage.so
 
 run: $(EXEC)
 	@./$(EXEC)

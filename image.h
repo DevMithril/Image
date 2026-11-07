@@ -23,14 +23,14 @@ subject to the following restrictions:
 
 */
 
-#ifndef TEXT_LIB_H
-#define TEXT_LIB_H
+#ifndef IMAGE_LIB_H
+#define IMAGE_LIB_H
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
 /*
 ================================================================================
-    Text
+    Image
 ================================================================================
 */
 

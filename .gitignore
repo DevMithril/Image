@@ -1,4 +1,4 @@
 build
 *.o
 *.d
-demo/demo_text
+demo/demo_image

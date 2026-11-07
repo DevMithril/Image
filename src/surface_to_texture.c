@@ -9,7 +9,8 @@ SDL_Texture *surface_to_texture(SDL_Surface *surface, SDL_Renderer *renderer) {
         return NULL;
     }
 
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, surface->w, surface->h);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
+                            SDL_TEXTUREACCESS_TARGET, surface->w, surface->h);
     if(!texture) {
         SDL_Log("SDL_CreateTexture() : %s\n", SDL_GetError());
         SDL_DestroyTexture(tmp);

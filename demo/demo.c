@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
-#include "../text.h"
+#include "../image.h"
 
 #define RES_X 480
 #define RES_Y 270

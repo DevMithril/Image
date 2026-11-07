@@ -2,7 +2,7 @@ CC= gcc
 CFLAGS= -Wall -Wextra -pedantic -std=c99
 SOFLAGS= -shared -fpic
 
-LIBSO= libtext.so
+LIBSO= libimage.so
 SRC_DIR= src/
 BUILD_DIR= build/
 BIN_DIR= $(BUILD_DIR)bin/
