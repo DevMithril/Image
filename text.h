@@ -169,6 +169,17 @@ bool img_replace(SDL_Surface *surface, SDL_Color base, SDL_Color new,
                     SDL_Rect *clip);
 
 /**
+ * Remplace tout les pixels de `surface` autre que `keep` par `new`
+ * \param surface la surface à modifier
+ * \param keep couleur à conserver
+ * \param new couleur qui écrasera le reste de la surface
+ * \return `false` en cas d'échec, `true` sinon
+ * \note `surface` est présumé être au format SDL_PIXELFORMAT_RGBA32
+ * \note `surface` n'est pas détruit par cette fonction
+ */
+bool img_mask(SDL_Surface *surface, SDL_Color keep, SDL_Color new);
+
+/**
  * Inverse les couleurs d'une surface (en concervant l'alpha)
  * \param surface la surface à modifier
  * \param clip rectangle à modifier sur `surface`, NULL pour toute la surface

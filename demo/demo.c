@@ -15,6 +15,7 @@
 #define DARK_RED ((SDL_Color){100, 0, 0, 255})
 #define ORANGE ((SDL_Color){200, 50, 0, 255})
 #define GREEN ((SDL_Color){50, 150, 0, 255})
+#define NO_COLOR ((SDL_Color){0, 0, 0, 0})
 
 typedef enum {
     TEXT_NORMAL,
@@ -23,6 +24,7 @@ typedef enum {
     TEXT_SOLID,
     TEXT_SHADOW,
     TEXT_REPLACE,
+    TEXT_MASK,
     TEXT_FULL_BORDER,
     TEXT_BORDERS,
     TEXT_FULL_OUTLINE,
@@ -169,6 +171,13 @@ void load_app_assets(App *app) {
     img_replace(tmp, ORANGE, GREEN, NULL);
     app->texture[TEXT_REPLACE] = surface_to_texture(tmp, app->renderer);
     app->dst[TEXT_REPLACE] = (SDL_FRect){10, 110, tmp->w, tmp->h};
+    SDL_DestroySurface(tmp);
+
+    tmp = create_text("Mask", app->font, ORANGE);
+    tmp = img_shadow(tmp, FULL_WHITE, (SDL_Point){1, -1});
+    img_mask(tmp, FULL_WHITE, NO_COLOR);
+    app->texture[TEXT_MASK] = surface_to_texture(tmp, app->renderer);
+    app->dst[TEXT_MASK] = (SDL_FRect){10, 130, tmp->w, tmp->h};
     SDL_DestroySurface(tmp);
 
     tmp = create_text("Full Border", app->font, ORANGE);
